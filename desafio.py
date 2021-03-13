@@ -27,14 +27,14 @@ def ehPrimo(n):
 def calculaPrimosEntre(x, y):
     lista_primos = []
     if (x % 2 != 0):
-        for i in range(x, y):
+        for i in range(x, y+1):
             resultado = ehPrimo(i)
             if resultado == True:
                 lista_primos.append(i)
             i += 2
             
     else:
-        for i in range(x, y):
+        for i in range(x, y+1):
             resultado = ehPrimo(i)
             if resultado == True:
                 lista_primos.append(i)
@@ -62,18 +62,20 @@ def criar():
     primeiro_numero = request.form['primeiro_numero']
     segundo_numero = request.form['segundo_numero']
 
-    if segundo_numero < primeiro_numero:
-        aux = primeiro_numero
-        primeiro_numero = segundo_numero
-        segundo_numero = aux
-
-
     if primeiro_numero == "" or segundo_numero == "":
         error = "Você não digitou um número em algum campo."
         return render_template('novo.html', titulo='Primos!', error=error)
     else:
 
-        primos = calculaPrimosEntre(int(primeiro_numero), int(segundo_numero))
+        primeiro_numero = int(primeiro_numero)
+        segundo_numero = int(segundo_numero)
+
+        if segundo_numero < primeiro_numero:
+            aux = primeiro_numero
+            primeiro_numero = segundo_numero
+            segundo_numero = aux
+
+        primos = calculaPrimosEntre(primeiro_numero, segundo_numero)
         primos = [str(x) for x in primos]
         primos = [', '. join(primos)]
         resultado = Resultado(primeiro_numero, segundo_numero, primos)
