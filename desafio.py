@@ -55,16 +55,25 @@ def redirecionar():
     return redirect(url_for('index'))
 
 
-@app.route('/criar', methods=['POST', ])
+@app.route('/criar', methods=['POST', 'GET'])
 def criar():
+    error = None
     primeiro_numero = request.form['primeiro_numero']
     segundo_numero = request.form['segundo_numero']
-    primos = calculaPrimosEntre(int(primeiro_numero), int(segundo_numero))
-    primos = [str(x) for x in primos]
-    primos = [', '. join(primos)]
-    resultado = Resultado(primeiro_numero, segundo_numero, primos)
-    lista.append(resultado)
-    return redirect(url_for('mostrar'))
+
+    if primeiro_numero == "" or segundo_numero == "":
+        error = "Você não digitou um número em algum campo."
+        return render_template('novo.html', titulo='Primos!', error=error)
+    else:
+
+        primos = calculaPrimosEntre(int(primeiro_numero), int(segundo_numero))
+        primos = [str(x) for x in primos]
+        primos = [', '. join(primos)]
+        resultado = Resultado(primeiro_numero, segundo_numero, primos)
+        lista.append(resultado)
+        return redirect(url_for('mostrar'))
+    
+    return render_template('novo.html', titulo='Primos!', error=error)
 
 
 app.run()
