@@ -43,12 +43,16 @@ def calculaPrimosEntre(x, y):
     return lista_primos
 
 @app.route('/')
+def inicio():
+    return render_template('inicio.html')
+
+@app.route('/inserir')
 def index():
-    return render_template('novo.html', titulo='Primos!')
+    return render_template('novo.html')
 
 @app.route('/resultado')
 def mostrar():
-    return render_template('lista.html', titulo='Resultado', lista=lista)
+    return render_template('lista.html', titulo='Lista', lista=lista)
 
 @app.route('/redirecionar', methods=['POST', ])
 def redirecionar():
@@ -64,7 +68,7 @@ def criar():
 
     if primeiro_numero == "" or segundo_numero == "":
         error = "Você não digitou um número em algum campo."
-        return render_template('novo.html', titulo='Primos!', error=error)
+        return render_template('novo.html', error=error)
     else:
 
         primeiro_numero = int(primeiro_numero)
@@ -82,7 +86,7 @@ def criar():
         lista.append(resultado)
         return redirect(url_for('mostrar'))
     
-    return render_template('novo.html', titulo='Primos!', error=error)
+    return render_template('novo.html', error=error)
 
 
 app.run()

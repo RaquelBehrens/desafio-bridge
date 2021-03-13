@@ -3,10 +3,10 @@
     <form action="{{ url_for('criar') }}" method="post">
         <fieldset>
           {% if not error %}        
-            <label for="fname">Nesse programa você poderá verificar todos os números primos entre dois números! Para isso, por favor digite o primeiro número desejado e o segundo:</label>
+            <label for="fname"> <br> Por favor digite o primeiro número desejado e o segundo: <br></label>
           {% endif %}
           <div class="form-group">
-            <label for="nome">Primeiro número</label>
+            <label for="nome"> <br> Primeiro número</label>
             <input type="text" id="primeiro_numero" name="primeiro_numero" class="form-control">
           </div>
           <div class="form-group">
