@@ -58,8 +58,15 @@ def redirecionar():
 @app.route('/criar', methods=['POST', 'GET'])
 def criar():
     error = None
+    aux = 0
     primeiro_numero = request.form['primeiro_numero']
     segundo_numero = request.form['segundo_numero']
+
+    if segundo_numero < primeiro_numero:
+        aux = primeiro_numero
+        primeiro_numero = segundo_numero
+        segundo_numero = aux
+
 
     if primeiro_numero == "" or segundo_numero == "":
         error = "Você não digitou um número em algum campo."
