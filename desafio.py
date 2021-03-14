@@ -11,36 +11,39 @@ class Resultado():
 
 lista = []
 
-def ehPrimo(n):
-    if (n == 1):
-        return False
-    elif (n == 2):
-        return True
-    elif ( n %2 == 0):
-        return False
-    
-    for k in range (3, math.floor(math.sqrt(n))+1, 2):
-        if (n %k == 0):
-            return False
-    return True
+import math
 
-def calculaPrimosEntre(x, y):
-    lista_primos = []
-    if (x % 2 != 0):
-        for i in range(x, y+1):
-            resultado = ehPrimo(i)
-            if resultado == True:
-                lista_primos.append(i)
-            i += 2
-            
-    else:
-        for i in range(x, y+1):
-            resultado = ehPrimo(i)
-            if resultado == True:
-                lista_primos.append(i)
-            i += 1
+def lista_numeros(lim):
+    lista = []
 
-    return lista_primos
+    for index in range(2, lim):
+        lista.append(index)
+
+    return lista
+
+def remove_zeros(lista, menor):
+    lista2 = []
+
+    for index in range(len(lista)):
+        if lista[index] and lista[index] > menor:
+            lista2.append(lista[index])
+
+    return lista2
+
+def calculaPrimosEntre(maior, menor):
+
+    lista = lista_numeros(maior)
+    limite = int(math.sqrt(maior))
+
+    for index1 in range(0, limite):
+        if not lista[index1]:
+            continue
+
+        for index2 in range(index1 + 1, maior - 2):
+            if lista[index2] and (not (lista[index2] % lista[index1])):
+                lista[index2] = 0
+
+    return remove_zeros(lista, menor)
 
 @app.route('/')
 def inicio():
@@ -79,7 +82,7 @@ def criar():
             primeiro_numero = segundo_numero
             segundo_numero = aux
 
-        primos = calculaPrimosEntre(primeiro_numero, segundo_numero)
+        primos = calculaPrimosEntre(segundo_numero, primeiro_numero)
         primos = [str(x) for x in primos]
         primos = [', '. join(primos)]
         resultado = Resultado(primeiro_numero, segundo_numero, primos)
@@ -90,4 +93,3 @@ def criar():
 
 
 app.run()
-
